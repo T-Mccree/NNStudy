@@ -23,11 +23,11 @@ plt.imshow(X_train[3], cmap=plt.get_cmap())
 # plt.show()
 
 num_pixels = X_train.shape[1]*X_train.shape[2]
-print("X_train.shape[2] = "+X_train.shape[2])
-print("X_train.shape[1] = "+X_train.shape[1])
-print("num_pixels = "+num_pixels)
-print("X_train.shape[0] = "+X_train.shape[0])
-print("X_test.shape[0] = "+X_test.shape[0])
+print(X_train.shape[1])
+print(X_train.shape[2])
+print(num_pixels)
+print(X_train.shape[0])
+print(X_test.shape[0])
 
 x_train = X_train.reshape(X_train.shape[0], num_pixels).astype('float32')  # 转换为1维向量
 x_test = X_test.reshape(X_test.shape[0], num_pixels).astype('float32')
