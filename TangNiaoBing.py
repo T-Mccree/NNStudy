@@ -9,7 +9,7 @@ np.random.seed(7)
 dataset = np.loadtxt(r'F:\PimaIndiansdiabetes.csv', delimiter=',', skiprows=1)
 # dataset = np.loadtxt('F:\PimaIndiansdiabetes.csv', dalimiter=',')
 
-x = dataset[:, 0 : 8]
+x = dataset[:, 0:8]
 y = dataset[:, 8]
 
 model = Sequential()
