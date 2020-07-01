@@ -1,13 +1,16 @@
 from keras.datasets import mnist
 import matplotlib.pyplot as plt
+from keras.utils import np_utils
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
 import numpy as np
 
-# 导入MNIST数据
-from keras.utils import np_utils
+# 设定随机数种子
+seed = 7
+np.random.seed(seed)
 
+# 导入MNIST数据
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
 
 # 显示四张图
