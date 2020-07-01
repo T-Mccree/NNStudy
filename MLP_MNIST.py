@@ -11,17 +11,17 @@ from keras.utils import np_utils
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
 
 # 显示四张图
-plt.subplot(221)
-plt.imshow(X_train[0], cmap=plt.get_cmap())
-
-plt.subplot(222)
-plt.imshow(X_train[1], cmap=plt.get_cmap())
-
-plt.subplot(223)
-plt.imshow(X_train[2], cmap=plt.get_cmap())
-
-plt.subplot(224)
-plt.imshow(X_train[3], cmap=plt.get_cmap())
+# plt.subplot(221)
+# plt.imshow(X_train[0], cmap=plt.get_cmap())
+#
+# plt.subplot(222)
+# plt.imshow(X_train[1], cmap=plt.get_cmap())
+#
+# plt.subplot(223)
+# plt.imshow(X_train[2], cmap=plt.get_cmap())
+#
+# plt.subplot(224)
+# plt.imshow(X_train[3], cmap=plt.get_cmap())
 
 # plt.show()
 
@@ -81,14 +81,35 @@ print('MLP的准确率为: %.2f%%' % (scores[1] * 100))
 
 
 # 建立显示训练过程的函数
-def show_train_history(train_history, train, validation):
-    plt.plot(train_history.history[train])
-    plt.plot(train_history.history[validation])
-    plt.title('Train History')
-    plt.ylabel(train)
-    plt.xlabel('Epoch')
-    plt.legend(['train', 'validation'], loc='upper left')
+# def show_train_history(train_history, train, validation):
+#     plt.plot(train_history.history[train])
+#     plt.plot(train_history.history[validation])
+#     plt.title('Train History')
+#     plt.ylabel(train)
+#     plt.xlabel('Epoch')
+#     plt.legend(['train', 'validation'], loc='upper left')
+#     plt.show()
+#
+#
+# show_train_history(train_history, 'acc', 'val_acc')  # 画出准确率执行结果
+prediction=model.predict_classes(x_test)  # 预测测试集
+
+
+def plot_images_labels_prediction(images, labels, prediction, idx, num=10):
+    fig = plt.gcf()  # 设置显示图形大小
+    fig.set_size_inches(12, 14)
+    if num > 25:
+        num = 25
+    for i in range(0, num):
+        ax = plt.subplot(5, 5, 1+i)  # 建立子图5行5列
+        ax.imshow(images[idx], cmap='binary')
+        title = 'lablel='+str(labels[idx])
+        if len(prediction) > 0:
+            title += ',predict=' + str(prediction[idx])
+        ax.set_title(title, fontsize=10)
+        ax.set_xticks([]); ax.set_yticks([])
+        idx += 1
     plt.show()
 
 
-show_train_history(train_history, 'acc', 'val_acc')  # 画出准确率执行结果
+plot_images_labels_prediction(X_test, y_test, prediction, idx=340)
