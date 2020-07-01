@@ -64,16 +64,31 @@ def create_model():
     model.compile(loss='categorical_crossentropy',
                   optimizer='adam', metrics=['accuracy'])  # 定义训练方式
 
-    # 开始训练的参数里面输入训练数据，训练标签，划分0.2为验证集，epochs为训练周期，
-    # batch_size为每一训练批次要输入多少个数据（训练批次 = 总数据 / 一批次训练的数据
-    # 量），verbose为显示训练过程。
-    train_history = model.fit(x=x_train_normalize,
-                              y=y_trainOneHot, validation_split=0.2,
-                              epochs=10, batch_size=200, verbose=2)  # 设置训练参数
     return model
 
 
 # 评估模型准确率
 model = create_model()
+# 开始训练的参数里面输入训练数据，训练标签，划分0.2为验证集，epochs为训练周期，
+# batch_size为每一训练批次要输入多少个数据（训练批次 = 总数据 / 一批次训练的数据
+# 量），verbose为显示训练过程。
+train_history = model.fit(x=x_train_normalize,
+                          y=y_trainOneHot, validation_split=0.2,
+                          epochs=10, batch_size=200, verbose=2)  # 设置训练参数
+
 scores = model.evaluate(x_test_normalize, y_testOneHot)  # 评估测试集
 print('MLP的准确率为: %.2f%%' % (scores[1] * 100))
+
+
+# 建立显示训练过程的函数
+def show_train_history(train_history, train, validation):
+    plt.plot(train_history.history[train])
+    plt.plot(train_history.history[validation])
+    plt.title('Train History')
+    plt.ylabel(train)
+    plt.xlabel('Epoch')
+    plt.legend(['train', 'validation'], loc='upper left')
+    plt.show()
+
+
+show_train_history(train_history, 'acc', 'val_acc')  # 画出准确率执行结果
