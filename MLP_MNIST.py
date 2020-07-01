@@ -25,7 +25,7 @@ plt.imshow(X_train[3], cmap=plt.get_cmap())
 
 # plt.show()
 
-num_pixels = X_train.shape[1]*X_train.shape[2]
+num_pixels = X_train.shape[1] * X_train.shape[2]
 print(X_train.shape[1])
 print(X_train.shape[2])
 print(num_pixels)
@@ -42,10 +42,38 @@ x_test_normalize = x_test / 255
 # 进行one-hot编码
 y_trainOneHot = np_utils.to_categorical(y_train)
 y_testOneHot = np_utils.to_categorical(y_test)
-num_class = y_test.shape[1]
+num_class = y_testOneHot.shape[1]
 print(num_class)
+
 
 # 建立模型
 def create_model():
+    # 创建模型
     model = Sequential()
-    model.add(Dense(units=256, input_dim=784, kernel_initializer='normal', activation='relu'))
+    model.add(Dense(units=num_pixels, input_dim=num_pixels,
+                    kernel_initializer='normal', activation='relu'))  # 输入层隐藏层
+    model.add(Dense(units=num_class, input_dim=num_pixels,
+                    kernel_initializer='normal', activation='softmax'))  # 输出层
+    model.summary()  # 查看模型摘要
+
+    # 训练模型
+    # 设置训练方式，loss为设置损失函数categorical_crossentropy（交叉熵）的训练效果比较好，
+    # 一般使用这个（损失函数就是帮我我们计算真实值和预测值之间的误差）。optimizer为设置优
+    # 化器，使用使用adam优化器可以让模型更快收敛（优化器的作用为在不断的批次训练中不断更
+    # 新权重和偏差，是损失函数最小化）。metrics为设置评估模型的方式为准确率。
+    model.compile(loss='categorical_crossentropy',
+                  optimizer='adam', metrics=['accuracy'])  # 定义训练方式
+
+    # 开始训练的参数里面输入训练数据，训练标签，划分0.2为验证集，epochs为训练周期，
+    # batch_size为每一训练批次要输入多少个数据（训练批次 = 总数据 / 一批次训练的数据
+    # 量），verbose为显示训练过程。
+    train_history = model.fit(x=x_train_normalize,
+                              y=y_trainOneHot, validation_split=0.2,
+                              epochs=10, batch_size=200, verbose=2)  # 设置训练参数
+    return model
+
+
+# 评估模型准确率
+model = create_model()
+scores = model.evaluate(x_test_normalize, y_testOneHot)  # 评估测试集
+print('MLP的准确率为: %.2f%%' % (scores[1] * 100))
