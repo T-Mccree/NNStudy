@@ -6,7 +6,7 @@ import numpy as np
 np.random.seed(7)
 
 #导入数据
-dataset = np.loadtxt(r'F:\PimaIndiansdiabetes.csv', delimiter=',', skiprows=1)
+dataset = np.loadtxt(r'F:\data\PimaIndiansdiabetes.csv', delimiter=',', skiprows=1)
 # dataset = np.loadtxt('F:\PimaIndiansdiabetes.csv', dalimiter=',')
 
 x = dataset[:, 0:8]
