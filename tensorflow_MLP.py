@@ -33,7 +33,7 @@ train_step = tf.train.AdagradOptimizer(0.3).minimize(cross_enerty)
 sess = tf.InteractiveSession()
 tf.global_variables_initializer().run()
 
-# 共使用3000个batch，每个batch100个样本进行训练模型
+# 共使用3000个，每个batch100个样本进行训练模型
 for i in range(3000):
     batch_xs, batch_ys = mnist.train.next_batch(100)
     train_step.run({x: batch_xs, y_: batch_ys, keep_prob: 0.75})
