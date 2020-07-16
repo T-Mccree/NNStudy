@@ -1,11 +1,11 @@
 from __future__ import division, print_function, absolute_import
-
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
 import numpy as np
 import matplotlib.pyplot as plt
-
 from tensorflow.examples.tutorials.mnist import input_data
+
+
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 
